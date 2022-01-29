@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import Table from './Table/Table';
+import Keyboard from './Keyboard/Keyboard';
 
 const App = () => {
   const [word, setWord] = useState('React test');
 
   return (
-    <div>
-      <h1>Jordle</h1>
-      <h2>{word}</h2>
+    <div id="app">
+      <div className="app-wrapper">
+        <h1 className="title">Jordle</h1>
+        <hr className="title-line" />
+        <Table />
+        <Keyboard />
+      </div>
     </div>
   );
 };
