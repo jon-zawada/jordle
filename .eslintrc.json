@@ -19,5 +19,7 @@
         "react"
     ],
     "rules": {
+        "comma-dangle": 0,
+        "react/function-component-definition": 0
     }
 }
