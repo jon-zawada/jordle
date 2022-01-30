@@ -7,10 +7,15 @@ const data = [
   ['enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'delete']
 ];
 
-const Keyboard = ({ letterPress }) => (
+const Keyboard = ({ letterPress, onEnterPress }) => (
   <div className="keyboard">
-    {data.map((letters) => (
-      <LetterRow letters={letters} letterPress={letterPress} />
+    {data.map((letters, index) => (
+      <LetterRow
+        key={index}
+        letters={letters}
+        letterPress={letterPress}
+        onEnterPress={onEnterPress}
+      />
     ))}
   </div>
 );

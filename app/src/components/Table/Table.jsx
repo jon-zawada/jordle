@@ -3,8 +3,8 @@ import Row from './Row';
 
 const Table = ({ state }) => (
   <div className="table">
-    {state.map((row) => (
-      <Row row={row} />
+    {state.map((row, index) => (
+      <Row key={index} row={row} />
     ))}
   </div>
 );

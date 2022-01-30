@@ -3,8 +3,8 @@ import Tile from './Tile';
 
 const Row = ({ row }) => (
   <div className="row">
-    {row.map((val) => (
-      <Tile val={val} />
+    {row.map((val, index) => (
+      <Tile key={index} val={val} />
     ))}
   </div>
 );

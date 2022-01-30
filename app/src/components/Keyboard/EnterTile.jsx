@@ -1,9 +1,9 @@
 import React from 'react';
 
-const EnterTile = ({ letter }) => (
+const EnterTile = ({ letter, onEnterPress }) => (
   <button
     className="nonletter letter"
-    onClick={() => console.log('enter')}
+    onClick={onEnterPress}
     type="button"
     value={letter}
   >

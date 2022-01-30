@@ -16,14 +16,15 @@ const GUESS_LIMIT = table.length;
 
 const App = () => {
   const [word, setWord] = useState('tower');
+  const [gameOver, setGameOver] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(0);
   const [currentRow, setCurrentRow] = useState(0);
   const [state, setTable] = useState(table);
 
   const letterPress = (e) => {
-    if (currentColumn === WORD_LENGTH_LIMIT) {
-      return;
-    }
+    if (gameOver) return;
+    if (currentColumn >= WORD_LENGTH_LIMIT) return;
+    if (currentRow >= GUESS_LIMIT) return;
     const letter = e.target.value;
     const stateCopy = state;
     stateCopy[currentRow][currentColumn] = letter;
@@ -31,8 +32,24 @@ const App = () => {
     setCurrentColumn((curr) => curr + 1);
   };
 
-  const onEnterPress = () => {
+  const nextRow = () => {
+    setCurrentRow((curr) => curr + 1);
+    setCurrentColumn(0);
+  };
 
+  const onEnterPress = () => {
+    if (gameOver) return;
+    if (currentRow >= GUESS_LIMIT) return;
+    const guess = state[currentRow].join('');
+    console.log(guess);
+    if (currentColumn < WORD_LENGTH_LIMIT) {
+      alert('Not long enough word');
+    } else if (guess === word) {
+      alert('Correct you win');
+      setGameOver(true);
+    } else {
+      nextRow();
+    }
   };
 
   return (
@@ -41,7 +58,7 @@ const App = () => {
         <h1>Jordle</h1>
         <hr />
         <Table state={state} />
-        <Keyboard letterPress={letterPress} />
+        <Keyboard letterPress={letterPress} onEnterPress={onEnterPress} />
       </div>
     </div>
   );
