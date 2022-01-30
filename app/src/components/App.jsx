@@ -19,7 +19,7 @@ const App = () => {
   const [gameOver, setGameOver] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(0);
   const [currentRow, setCurrentRow] = useState(0);
-  const [state, setTable] = useState(table);
+  const [state, setState] = useState(table);
 
   const letterPress = (e) => {
     if (gameOver) return;
@@ -28,7 +28,7 @@ const App = () => {
     const letter = e.target.value;
     const stateCopy = state;
     stateCopy[currentRow][currentColumn] = letter;
-    setTable(stateCopy);
+    setState(stateCopy);
     setCurrentColumn((curr) => curr + 1);
   };
 
@@ -52,13 +52,28 @@ const App = () => {
     }
   };
 
+  const onDeletePress = () => {
+    if (gameOver) return;
+    if (currentColumn <= 0) return;
+    const stateCopy = state;
+    setCurrentColumn((curr) => {
+      stateCopy[currentRow][curr - 1] = '';
+      setState(stateCopy);
+      return curr - 1;
+    });
+  };
+
   return (
     <div id="app">
       <div className="app-wrapper">
         <h1>Jordle</h1>
         <hr />
         <Table state={state} />
-        <Keyboard letterPress={letterPress} onEnterPress={onEnterPress} />
+        <Keyboard
+          letterPress={letterPress}
+          onEnterPress={onEnterPress}
+          onDeletePress={onDeletePress}
+        />
       </div>
     </div>
   );

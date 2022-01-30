@@ -1,9 +1,9 @@
 import React from 'react';
 
-const DeleteTile = ({ letter }) => (
+const DeleteTile = ({ letter, onDeletePress }) => (
   <button
     className="nonletter letter"
-    onClick={() => console.log('delete')}
+    onClick={onDeletePress}
     type="button"
     value={letter}
   >
