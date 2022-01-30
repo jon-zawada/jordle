@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from './Table/Table';
 import Keyboard from './Keyboard/Keyboard';
+import { answers, answerCount, randomIntFromInterval } from '../../../wordle/wordle';
 
 const table = [
   ['', '', '', '', ''],
@@ -10,16 +11,20 @@ const table = [
   ['', '', '', '', ''],
   ['', '', '', '', ''],
 ];
-
 const WORD_LENGTH_LIMIT = table[0].length;
 const GUESS_LIMIT = table.length;
 
 const App = () => {
-  const [word, setWord] = useState('tower');
+  const [word, setWord] = useState('');
   const [gameOver, setGameOver] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(0);
   const [currentRow, setCurrentRow] = useState(0);
   const [state, setState] = useState(table);
+
+  const getWord = () => {
+    const randInt = randomIntFromInterval(0, answerCount);
+    return answers[randInt];
+  };
 
   const letterPress = (e) => {
     if (gameOver) return;
@@ -62,6 +67,10 @@ const App = () => {
       return curr - 1;
     });
   };
+
+  useEffect(() => {
+    setWord(getWord());
+  }, []);
 
   return (
     <div id="app">
