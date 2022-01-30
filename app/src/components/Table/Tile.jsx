@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tile = ({ val }) => (
+const Tile = ({ val = '' }) => (
   <div className="tile">{val}</div>
 );
 

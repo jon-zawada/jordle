@@ -18,14 +18,14 @@
 .app-wrapper{
 }
 
-.title {
+h1 {
   font-size: 36px;
   letter-spacing: 3.6px;
   text-transform: uppercase;
   text-align: center;
 }
 
-.title-line {
+hr {
   border-color: var(--tile-grey);
   margin: 5px;
 }
@@ -44,8 +44,8 @@
 
 
 .tile {
-  width: 53px;
-  height: 53px;
+  width: 56px;
+  height: 56px;
   margin: 2px;
   border: solid var(--tile-grey) 2px;
   display: inline-flex;

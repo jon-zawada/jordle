@@ -1,12 +1,10 @@
 import React from 'react';
 import Row from './Row';
 
-const ROW_COUNT = 6;
-
-const Table = () => (
+const Table = ({ state }) => (
   <div className="table">
-    {[...Array(ROW_COUNT)].map(() => (
-      <Row />
+    {state.map((row) => (
+      <Row row={row} />
     ))}
   </div>
 );

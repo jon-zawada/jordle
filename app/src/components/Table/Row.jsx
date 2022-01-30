@@ -1,12 +1,10 @@
 import React from 'react';
 import Tile from './Tile';
 
-const WORD_COUNT = 5;
-
-const Row = () => (
+const Row = ({ row }) => (
   <div className="row">
-    {[...Array(WORD_COUNT)].map((row, index) => (
-      <Tile val={index} />
+    {row.map((val) => (
+      <Tile val={val} />
     ))}
   </div>
 );

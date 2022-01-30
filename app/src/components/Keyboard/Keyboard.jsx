@@ -7,10 +7,10 @@ const data = [
   ['enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'delete']
 ];
 
-const Keyboard = () => (
+const Keyboard = ({ letterPress }) => (
   <div className="keyboard">
     {data.map((letters) => (
-      <LetterRow letters={letters} />
+      <LetterRow letters={letters} letterPress={letterPress} />
     ))}
   </div>
 );
