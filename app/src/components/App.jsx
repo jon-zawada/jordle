@@ -43,6 +43,19 @@ const App = () => {
     setCurrentColumn(0);
   };
 
+  const checkIncorrectGuess = (guess) => {
+    axios.get(`/guess/${guess}`)
+      .then((res) => {
+        const isValid = res.data;
+        if (isValid) {
+          console.log('guess was valid guess', isValid);
+        } else {
+          console.log('Guess was not valid', isValid);
+        }
+      })
+      .catch((res) => { console.log('SOMETHING WENT WRONG WITH YOUR GUESS', res); });
+  };
+
   const onEnterPress = () => {
     if (gameOver) return;
     if (currentRow >= GUESS_LIMIT) return;
@@ -53,6 +66,7 @@ const App = () => {
       alert('Correct you win');
       setGameOver(true);
     } else {
+      checkIncorrectGuess(guess);
       nextRow();
     }
   };

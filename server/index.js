@@ -34,7 +34,7 @@ app.get('/guesses', (req, res) => {
   res.send(words.split('\n'));
 });
 
-app.get('/guesses/valid/:guess', (req, res) => {
+app.get('/guess/:guess', (req, res) => {
   const { guess } = req.params;
   if (dictionary[guess] || guessDictionary[guess]) {
     res.send('true');
