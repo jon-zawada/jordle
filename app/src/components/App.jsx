@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from './Table/Table';
 import Keyboard from './Keyboard/Keyboard';
-import { answers, answerCount, randomIntFromInterval } from '../../../wordle/wordle';
 
 const table = [
   ['', '', '', '', ''],
@@ -17,14 +16,32 @@ const GUESS_LIMIT = table.length;
 
 const App = () => {
   const [word, setWord] = useState('');
+  const [letterCount, setLetterCount] = useState({});
   const [gameOver, setGameOver] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(0);
   const [currentRow, setCurrentRow] = useState(0);
   const [state, setState] = useState(table);
 
+  const counterLetters = (futureWord) => {
+    const store = {};
+    for (let i = 0; i < futureWord.length; i++) {
+      const letter = futureWord[i];
+      if (store[letter]) {
+        store[letter]++;
+      } else {
+        store[letter] = 1;
+      }
+    }
+    return store;
+  };
+
   const getWord = () => {
-    const randInt = randomIntFromInterval(0, answerCount);
-    return answers[randInt];
+    axios.get('/answers/random')
+      .then((res) => {
+        const futureWord = res.data;
+        setLetterCount(counterLetters(futureWord));
+        setWord(futureWord);
+      });
   };
 
   const letterPress = (e) => {
@@ -43,18 +60,19 @@ const App = () => {
     setCurrentColumn(0);
   };
 
-  const checkIncorrectGuess = (guess) => {
+  const checkIncorrectGuess = (guess) => (
     axios.get(`/guess/${guess}`)
       .then((res) => {
         const isValid = res.data;
         if (isValid) {
           console.log('guess was valid guess', isValid);
-        } else {
-          console.log('Guess was not valid', isValid);
+          return isValid;
         }
+        console.log('Guess was not valid', isValid);
+        return isValid;
       })
-      .catch((res) => { console.log('SOMETHING WENT WRONG WITH YOUR GUESS', res); });
-  };
+      .catch(() => alert('UH OH BIG UH OH'))
+  );
 
   const onEnterPress = () => {
     if (gameOver) return;
@@ -66,8 +84,12 @@ const App = () => {
       alert('Correct you win');
       setGameOver(true);
     } else {
-      checkIncorrectGuess(guess);
-      nextRow();
+      checkIncorrectGuess(guess)
+        .then((guessIsValid) => {
+          if (guessIsValid) {
+            nextRow();
+          }
+        });
     }
   };
 
@@ -83,7 +105,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    setWord(getWord());
+    getWord();
   }, []);
 
   return (
