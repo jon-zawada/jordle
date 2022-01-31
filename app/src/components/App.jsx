@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Table from './Table/Table';
 import Keyboard from './Keyboard/Keyboard';
 import { answers, answerCount, randomIntFromInterval } from '../../../wordle/wordle';
@@ -46,7 +47,6 @@ const App = () => {
     if (gameOver) return;
     if (currentRow >= GUESS_LIMIT) return;
     const guess = state[currentRow].join('');
-    console.log(guess);
     if (currentColumn < WORD_LENGTH_LIMIT) {
       alert('Not long enough word');
     } else if (guess === word) {
